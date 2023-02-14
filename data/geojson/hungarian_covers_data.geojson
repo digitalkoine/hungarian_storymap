@@ -1,0 +1,11 @@
+data={
+"type": "FeatureCollection",
+"name": "hungarian_covers_data",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "lat": 47.4943034486, "lng": 19.043926404400001, "Place": "Budapest", "Country": "Hungary", "Language": "Hungarian", "Year": 1968, "Translator": "Maria Ruzitska", "Title": "Jane Eyre: A Novel", "Publisher": "Európa", "Address": "Budapest. Hungary", "Comments": "Ruzitska's translation was first published in 1963", "img": "https://raw.githubusercontent.com/digitalkoine/hungarian_storymap/main/hungarian/1968%20Ruzitska.jpg"}, "geometry": { "type": "Point", "coordinates": [ 19.043926404400001, 47.4943034486 ] } },
+{ "type": "Feature", "properties": { "lat": 47.548868351000003, "lng": 19.070776593200002, "Place": "Budapest", "Country": "Hungary", "Language": "Hungarian", "Year": 1999, "Translator": "Maria Ruzitska", "Title": "A Lowood Orphan", "Publisher": "Mûra", "Address": "Budapest. Hungary", "Comments": "-", "img": "https://raw.githubusercontent.com/digitalkoine/hungarian_storymap/main/hungarian/1999%20Ruzitska.jpeg" }, "geometry": { "type": "Point", "coordinates": [ 19.070776593200002, 47.548868351 ] } },
+{ "type": "Feature", "properties": { "lat": 47.530378018599997, "lng": 19.048428165200001, "Place": "Budapest", "Country": "Hungary", "Language": "Hungarian", "Year": 2005, "Translator": "Gabor George. Maria Ruzitska", "Title": "Jane Eyre", "Publisher": "Palatinus", "Address": "Budapest. Hungary", "Comments": "-", "img": "https://raw.githubusercontent.com/digitalkoine/hungarian_storymap/main/hungarian/2005_Ruzitska_Gorgey.jpg" }, "geometry": { "type": "Point", "coordinates": [ 19.048428165200001, 47.530378018599997 ] } },
+{ "type": "Feature", "properties": { "lat": 47.5169022587, "lng": 19.055552112600001, "Place": "Budapest", "Country": "Hungary", "Language": "Hungarian", "Year": 2014, "Translator": "Kiss Zsuzsa", "Title": "Jane Eyre", "Publisher": "Ulpius-ház", "Address": "Budapest. Hungary", "Comments": "-", "img": "https://raw.githubusercontent.com/digitalkoine/hungarian_storymap/main/hungarian/2014%20Zsuzsa.jpeg" }, "geometry": { "type": "Point", "coordinates": [ 19.055552112600001, 47.5169022587 ] } }
+]
+}

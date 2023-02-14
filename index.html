@@ -1,0 +1,212 @@
+<html>
+	<head>
+	<!-- The web browser window title -->
+		<title>Prismatic Jane Eyre</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!--Don't change. leaflet.css is the css code for Leaflet, it is stored in the directory to ensure the whole code is standalone and future proof-->
+		<link rel="stylesheet" href="./css/leaflet.css" />
+		<!--Don't change. leaflet.js is the javascript code for Leaflet,  it is stored in the directory to ensure the whole code is standalone and future proof-->
+		<script src="./js/leaflet.js"></script>
+		<!--Don't change. easy-button.css and .js help add button in the right hand sides. See storymap.js for more info-->
+		<link rel="stylesheet" href="./css/easy-button.css">
+		<script src="./js/easy-button.js"></script>
+		<!--Don't change. storymap plugin. In the .css the design of the elements of the story is stored. In the .js, several other aspects related to the map have been added -->
+		<link rel="stylesheet" href="./css/storymap.css" />
+		<script src="./js/storymap.js"></script>
+		<!--Don't change. Minimap Plugins, showing the map in the right bottom corner -->
+		<link rel="stylesheet" href="./css/Control.MiniMap.css" />
+		<script src="./js/Control.MiniMap.js" type="text/javascript"></script>
+		<!--Do change. This calls the points and line for each contry. It must be changed according to the map-->
+		<script src="./data/geojson/hungarian_covers_data.geojson"></script>
+		<script src="./data/geojson/hungarian_covers_data_line.geojson"></script>
+	</head>
+	<body>
+		<!-- The three main elements for the story map -->
+		<div id="title">Hungarian Covers Map</div> <!--Do change. Change to any title you want. -->
+		<div id="story"></div> <!--Don't change. Holds the story html. It applies the style defined in storymap.css -->
+		<div id="map"></div> <!--Don't change. Holds the background map. It applies the style defined in storymap.css -->
+		<script>
+
+		//Don't change. Creates an empty array called position. It fill filled with the for loop below.
+		var position = new Array();
+
+		//Don't change. loop on each feature within the geojson "data", increasing each time i by 1, as long as the number i is less than the number of features in the geojson 'data'
+		for(var i = 0; i < data.features.length; i++){
+			//Don't change. create an empty array. It will store the coordinate for each single point
+			var lat_lng = new Array()
+			//Don't change. access the second element of the geometry.coordinates key of feature number i (remember, the second feature is numbered 1), and store it in a variable lat
+			var lat = data.features[i].geometry.coordinates[1]
+			//Don't change. access the first element of the geometry.coordinates key of feature number i (remember, the first feature is numbered 0), and store it in a variable llng
+			var lng = data.features[i].geometry.coordinates[0]
+		  //Don't change. append lat to the array lat_lng
+			lat_lng.push(lat)
+			//Don't change. append lng to the array lat_lng
+			lat_lng.push(lng)
+			//Don't change. append the array lat_lng to the end of the array position (which becomes an array of arrays), then loop back and does it for the next feature. Therefore, it is fundamental that the feature are in the correct order.
+		  position.push(lat_lng)
+		}
+
+			var researcher = 'Prismatic Jane Eyre team' //Do change. The name of the researcher
+			var language = 'Hungarian' //Do change. The language of the map
+			var cover_image = 'https://raw.githubusercontent.com/digitalkoine/hungarian_storymap/main/hungarian/02_Cover_CoverMap_Hungarian.jpg' //Do change. The cover image link
+			var baseMap = "carto_db_voyager"; //Change if needed. Valid options "osm", "carto_db_voyager" and "toner". They are defined in storymap.js
+			var startCoordinate = position[0]; // Change if needed. Currently, it calls the first element of the array position, i.e. the fist element of the data geojson (see above). You can change this to specific coordinates, [xxx.xx, yyyy.yy]
+			var startZoom = 12; //Change if needed. Change this to you desired start zoom level
+			var elementZoom = 16; //Change if needed. the zoom level the map goes to when you click
+			var titleOpacity = 0.9; //Change if needed. Set the opacity for the title element
+			var storyOpacity = 1; //Change if needed. Set the opacity for the story element
+			var panTime = 2; //Change if needed. Set the time (seconds) for panning the map
+			var titleTextColor = "#101010"; //Change if needed. The main title text color
+			var titleBackground = "#D5D5D5"; //Change if needed. The main title background color
+			var storyTextColor = "#101010"; //Change if needed. Story text color
+			var storyBackground = "rgba(215,215,215,0.7)"; //Change if needed. Story background color, in rgb. The last number controls the opacity of the story background box
+			var backgroundImage = ''//Change if needed. You can add an image, such as "url('https://raw.githubusercontent.com/digitalkoine/french_storymap/main/french/01_Flag.png')". By default, it has no image;
+		</script>
+
+		<!--Don't change. the storymap must be loaded at this point of the script, after the above variables have been defined. The next part of the script calls
+		variables that are defined in storymap.js, hence the js file must be called before that -->
+		<script src="./js/storymap.js"></script>
+
+		<script>
+			//Don't change. startText is the text used at the start of each story. We use += to add elements to it, and eventually it results in an html script.
+			let startText = '<h3>';
+		startText += 'Researcher: ';
+		startText += researcher; //Don't change. The varibale is defined above
+		startText += '</h3>';
+		startText += '<img src=';
+		startText += cover_image;//Don't change. The varibale is defined above
+		startText += '>';
+		startText += '</br></br>Principal Investigator: <b>Matthew Reynolds</b> | Digital Humanities Expert: <b>Giovanni Pietro Vitali</b> | WebGIS Expert: <b>Simone Landucci</b>'
+		startText += '<img src="./icons/PrismaticLogo.png">'; ;
+		startText += 'This map shows you a selection of book covers linked to their place of publication. The accuracy of that ‘place’ varies. When we have been able to find a street address for the publisher, we have used that as the book’s location on the map and also listed it beneath the cover image'
+		startText += ' (though it may sometimes be the case that the address was different at the time of publication). When we have not been able to find a street address we have supplied a random location within the town or city concerned: in these cases no address is listed beneath the cover image.'
+		startText += '<br></br>'
+		startText += '<i>Use the buttons at the top left of the map to move through the covers, and zoom in and out. Alternatively, you can use the directional buttons on your keyboard, and track-pad, mouse or touchscreen.</i>';
+
+		//Don't change. Creates an empty array called title. It fill filled with the for loop below. It is necessary for the onEachFeature function in the storymap.js
+		var titles = new Array()
+
+		//Don't change. loop on each feature within the geojson "data", increasing each time i by 1, as long as the number i is less than the number of features in the geojson 'data'
+		for(var i = 0; i < data.features.length; i++){
+			//Don't change. Get the property Year from the ith feature in the geojson
+			var year = data.features[i].properties.Year
+			//Don't change. Get the property Translator from the ith feature in the geojson
+			var translator = data.features[i].properties.Translator
+			//Don't change. The string str will be 20xx - Title
+			let str = year;
+			str += ' - ';
+			str += translator;
+			//Don't change. Appends the string str to the end of the array title, then loop back and does it for the next feature.
+			titles.push(str)
+		};
+
+		//Change if needed. This is the style of the points, change to make them different.
+		var geojsonMarkerOptions = {
+		    radius: 6,
+		    fillColor: "#4f97cb",
+		    color: "#fff",
+		    weight: 2,
+		    opacity: 1,
+		    fillOpacity: 0.8
+		};
+
+		//Change if needed. This is the style of the line, change to make them different.
+		var myStyle = {
+		    "color": "#4f97cb",
+		    "weight": 2,
+		    "opacity":1
+		};
+
+		//Don't change. It creates the geojson calling '/data/geojson/hungarian_covers_data_line.geojson', pass the style 'myStyle', and add it to map. Since it searches for the variable line, this must appear at the beginning of the line geojson.
+		var line_translation = L.geoJSON(line, {
+		    style: myStyle
+		})
+		line_translation.addTo(map);
+
+		//Don't change. It creates the geojson calling '/data/geojson/hungarian_covers_data.geojson', pass the style 'geojsonMarkerOptions' using pointToLayer, and add it to map. Since it searches for the variable data, this must appear at the beginning of the line geojson.
+		var data_translation = L.geoJSON(data, {
+		    pointToLayer: function (feature, latlng) {
+		        return L.circleMarker(latlng, geojsonMarkerOptions);
+		    },
+				//Don't change. The function onEachFeature is a custom function defined in storymap.js. It allows to perform certain actions when the point is clicked on or overed above.
+				onEachFeature: onEachFeature
+		})
+		data_translation.addTo(map);
+
+		var showPopUp = false; //Change if needed. The showPopUp variable dictates if the pop-ups will be shown as default when moving to the next point
+		var useMarker = true; //Change if needed. If false, it disables the use of markers
+
+		//Don't change. Creates an empty array called bubbleText. This will be the text that appears in the popup. It is filled with the for loop below. It is necessary for the onEachFeature function in the storymap.js
+		var bubbleText = new Array ();
+
+		for(var i = 0; i < data.features.length; i++){
+			var year = data.features[i].properties.Year
+			var translator = data.features[i].properties.Translator
+			let str = '<h3>';
+			str += year;
+			str += ' - ';
+			str += translator;
+			str += '</h3>';
+			bubbleText.push(str)
+		};
+
+		//Don't change. StoryText is an empty array that will be filled with the list of all story contents.
+
+		var storyText = new Array();
+
+		//Don't change. Loop on each feature within the geojson "data", increasing each time i by 1, as long as the number i is less than the number of features in the geojson 'data'
+		for(var i = 0; i < data.features.length; i++){
+			//Don't change. Create a number of variables based on the attribute table
+			var place = data.features[i].properties.Place
+			var country = data.features[i].properties.County
+		 	var language = data.features[i].properties.Language
+			var year = data.features[i].properties.Year
+			var translator = data.features[i].properties.Translator
+			var title = data.features[i].properties.Title
+			var address =  data.features[i].properties.Address
+			var publisher =  data.features[i].properties.Publisher
+			var comments =  data.features[i].properties.Comments
+			var img =  data.features[i].properties.img
+			//Change if needed. str is the story content for each feature. If you want to change to order, show less or more information, you need to change the html text that results from the concatenation.
+			let str = '<h1>';
+			str += year;
+			str += ' - ';
+			str += translator;
+			str += '</h1>';
+			str += '<img src=';
+			str += img;
+			str += ' style='
+			str += '"'
+			str += 'height: 70%; width: 70%; display: block; margin-left: auto; margin-right: auto; object-fit: contain'
+			str += '"'
+			str += '/>';
+			str += '<br> Year: <b>';
+			str += year;
+			str+= '</b>';
+			str += '<br>  Language: <b>';
+			str += language;
+			str+= '</b>';
+			str += '<br>  Title: <b>';
+			str += title;
+			str+= '</b>';
+			str += '<br>  Translator: <b>';
+			str += translator;
+			str+= '</b>';
+			str += '<br>  Publisher: <b>';
+			str += publisher;
+			str+= '</b>';
+			str += '<br>  Place: <b>';
+			str += place;
+			str+= '</b>';
+			str += '<br>  Comments: <b>';
+			str += comments;
+			str+= '</b>';
+			str += '<br>  Address: <b>';
+			str += address;
+			str+= '</b>';
+		  storyText.push(str)
+		}
+		</script>
+	</body>
+</html>
