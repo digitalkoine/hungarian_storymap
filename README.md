@@ -1,4 +1,4 @@
-# <a href="https://digitalkoine.github.io/japanese_storymap/">Japanese Covers Map</a>
+# <a href="https://digitalkoine.github.io/hungarian_storymap/">Hungarian Covers Map</a>
 
 The Covers Maps present a selection of book covers linked to their place of publication. The accuracy of that ‘place’ varies. When we have been able to find a street address for the publisher, we have used that as the book’s location on the map and also listed it beneath the cover image (though it may sometimes be the case that the address was different at the time of publication). When we have not been able to find a street address we have supplied a random location within the town or city concerned: in these cases no address is listed beneath the cover image.  
 
